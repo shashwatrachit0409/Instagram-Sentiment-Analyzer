@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Instagram Analyzer</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+        background-size: 400% 400%;
+        animation: gradientMove 15s ease infinite;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 1rem;
+      }
+
+      .container-box {
+        width: 100%;
+        max-width: 900px;
+        max-height: 100%;
+      }
+
+      .form-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        color: white;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      .header p {
+        font-size: 1.1rem;
+        color: #f8f9fa;
+      }
+
+      .btn-group-custom {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .btn-group-custom a {
+        min-width: 140px;
+      }
+
+      .btn-lg {
+        font-size: 1.1rem;
+        padding: 0.6rem 1.2rem;
+      }
+
+      #loader {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+        color: #0d6efd;
+      }
+
+      footer {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #ffffff;
+        padding: 1rem;
+        background-color: #333333;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-content">
+      <div class="container-box">
+        <div class="header">
+          <h1>📊 Instagram Sentiment Analyzer</h1>
+          <p>
+            Get insights from any public Instagram profile with AI-powered
+            analysis
+          </p>
+        </div>
+
+        <div class="form-section">
+          <form
+            id="analyzeForm"
+            action="/analyze"
+            method="post"
+            onsubmit="return validateForm()"
+          >
+            <div class="mb-3">
+              <label for="username" class="form-label fw-semibold"
+                >Instagram Username</label
+              >
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="form-control form-control-sm"
+                placeholder="e.g., natgeo"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mt-3">
+              🔍 Analyze Profile
+            </button>
+          </form>
+
+          <div id="loader">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2">Analyzing profile, please wait...</p>
+          </div>
+        </div>
+
+        <div id="sentimentSection" class="mt-5">
+          <h4 class="fw-semibold mb-3 text-white">
+            🎭 Filter Posts by Sentiment
+          </h4>
+          <div class="btn-group-custom">
+            <a href="/filter/Very Positive" class="btn btn-success btn-lg"
+              >😊 Very Positive</a
+            >
+            <a href="/filter/Positive" class="btn btn-info btn-lg"
+              >🙂 Positive</a
+            >
+            <a href="/filter/Neutral" class="btn btn-secondary btn-lg"
+              >😐 Neutral</a
+            >
+            <a href="/filter/Negative" class="btn btn-warning btn-lg"
+              >🙁 Negative</a
+            >
+            <a href="/filter/Very Negative" class="btn btn-danger btn-lg"
+              >😠 Very Negative</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      &copy; 2025 Instagram Sentiment Analyzer. All rights reserved.
+    </footer>
+
+    <script>
+      function validateForm() {
+        const usernameInput = document.getElementById("username").value.trim();
+        if (usernameInput === "" || usernameInput.includes(" ")) {
+          alert("Please enter a valid Instagram username without spaces.");
+          return false;
+        }
+        document.getElementById("loader").style.display = "block";
+        return true;
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        if (window.location.hash === "#sentiment") {
+          const section = document.getElementById("sentimentSection");
+          section?.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    </script>
+  </body>
+</html>
